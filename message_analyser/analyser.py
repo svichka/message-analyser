@@ -3,7 +3,6 @@ import asyncio
 import datetime
 import message_analyser.plotter as plt
 import message_analyser.storage as storage
-import message_analyser.retriever.vkOpt as vkOpt
 import message_analyser.structure_tools as stools
 import message_analyser.retriever.telegram as tlg
 from message_analyser.misc import log_line, delay
@@ -102,10 +101,10 @@ async def _plot_messages_distribution(msgs, your_name, target_name, results_dire
     await asyncio.sleep(delay)
     plt.barplot_messages_per_weekday(msgs, your_name, target_name, results_directory)
     await asyncio.sleep(delay)
-    plt.barplot_messages_per_day(msgs, results_directory)
-    await asyncio.sleep(delay)
-    plt.barplot_messages_per_minutes(msgs, results_directory)
-    await asyncio.sleep(delay)
+    # plt.barplot_messages_per_day(msgs, results_directory)
+    # await asyncio.sleep(delay)
+    # plt.barplot_messages_per_minutes(msgs, results_directory)
+    # await asyncio.sleep(delay)
     plt.barplot_non_text_messages(msgs, results_directory)
     await asyncio.sleep(delay)
     plt.distplot_messages_per_hour(msgs, results_directory)
@@ -158,11 +157,6 @@ async def _get_all_messages(dialog, vkopt_file, your_name, target_name, loop):
     msgs = []
     if dialog != -1:
         msgs.extend(await tlg.get_telegram_messages(your_name, target_name, loop=loop, target_id=dialog))
-    await  asyncio.sleep(delay)
-    if vkopt_file:
-        msgs.extend(vkOpt.get_mymessages_from_file(your_name, target_name, vkopt_file))
-        await  asyncio.sleep(delay)
-        msgs.sort(key=lambda msg: msg.date)
     await  asyncio.sleep(delay)
     return msgs
 

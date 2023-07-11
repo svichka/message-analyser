@@ -118,6 +118,7 @@ def _get_xticks(msgs, crop=True):
     else:  # too short message history -> we split data by weeks, not months
         xlabel = "week"
         weeks_ticks = stools.get_weeks(msgs)
+        print(weeks_ticks)
         xticks_labels = stools.date_days_to_str_days(weeks_ticks)
         if len(weeks_ticks) > 2 and (weeks_ticks[1] - start_date).days < 3 and crop:
             xticks_labels[0] = ""  # remove first short week tick for better look
